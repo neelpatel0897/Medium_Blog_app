@@ -216,6 +216,3 @@ userRouter.post('/signup', async(c) => {
   })
   
 
-//   "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2ODRhYmY5LTE1MTAtNGM3Mi05YWJmLWJlZDRjMjdlZjliZCJ9.VwjbqUtAvKrPGovsF6xMgagjGgIuZ3yd_TIBgA2ONyU"
-
-    // "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2ODRhYmY5LTE1MTAtNGM3Mi05YWJmLWJlZDRjMjdlZjliZCJ9.VwjbqUtAvKrPGovsF6xMgagjGgIuZ3yd_TIBgA2ONyU"
