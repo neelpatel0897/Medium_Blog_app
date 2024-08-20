@@ -9,6 +9,9 @@ interface Env {
   JWT_SECRET: string;
 }
 
+//hello this is uncommitted
+
+
 const app = new Hono<{
   Bindings: Env,
   Variables: {},
@@ -27,4 +30,4 @@ app.get('/', (c) => {
 
 export default app
 
-// DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiZDNkNjU1YTEtNmJmYS00MmZiLThiMWYtNGMyZjE2MzUwNjdmIiwidGVuYW50X2lkIjoiOTFlM2U2ODA0ODZiZDI2ZWU3ZjJiYjAwNWQyZmE3OTkwNmQ4ZDA1NTIwMTY4Y2M0OTUwMjhiNDFjZDdlNTNlYiIsImludGVybmFsX3NlY3JldCI6IjRlZDZiOGMyLTZlMmUtNDg0OC05Mjg4LWI3M2NjNzI0MDBlMiJ9.XdrRC8rtUEwgX9r3YrISGOCdjIq2HgbXoOCVKiCi2fU"
+
