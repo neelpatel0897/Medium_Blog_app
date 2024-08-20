@@ -15,7 +15,7 @@ export const userRouter = new Hono<{
 	}
 }>();
 
-userRouter.use('/api/v1/blog/*', async (c, next) => {
+userRouter.use('/blog/*', async (c, next) => {
 	const jwt = c.req.header('Authorization');
 	if (!jwt) {
 		c.status(401);
@@ -31,7 +31,7 @@ userRouter.use('/api/v1/blog/*', async (c, next) => {
 	await next()
 })
 
-userRouter.post('/api/v1/signup', async (c) => {
+userRouter.post('/signup', async (c) => {
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env?.DATABASE_URL	,
 	}).$extends(withAccelerate());
@@ -152,3 +152,64 @@ userRouter.put('/blog', async (c) => {
 
 
 
+
+
+
+
+
+userRouter.post('/signup', async(c) => {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+  
+    const body = await c.req.json();
+  
+    //  validate zod, hashed password
+    
+    try{
+      const user= await prisma.user.create({
+        data: {
+          email: body.email,
+          password: body.password,
+          name: body.name
+          
+        },
+      });
+  
+      const jwt= await sign({ id: user.id }, c.env.JWT_SECRET );
+      return c.json({jwt});
+    }catch(error){
+      c.status(403);
+      return c.json({error: "error while creating user"});
+    }
+   
+    
+  })
+  
+  
+  userRouter.post('/signin', async (c) => {
+      const prisma = new PrismaClient({
+          datasourceUrl: c.env?.DATABASE_URL	,
+      }).$extends(withAccelerate());
+  
+      const body = await c.req.json();
+      const user = await prisma.user.findUnique({
+          where: {
+            email: body.email,
+            password: body.password
+          }
+      });
+  
+      if (!user) {
+          c.status(403);
+          return c.json({ message: "Incorrect Credentials" });
+      }
+  
+      const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
+      return c.json({ jwt });
+  })
+  
+
+//   "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2ODRhYmY5LTE1MTAtNGM3Mi05YWJmLWJlZDRjMjdlZjliZCJ9.VwjbqUtAvKrPGovsF6xMgagjGgIuZ3yd_TIBgA2ONyU"
+
+    // "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2ODRhYmY5LTE1MTAtNGM3Mi05YWJmLWJlZDRjMjdlZjliZCJ9.VwjbqUtAvKrPGovsF6xMgagjGgIuZ3yd_TIBgA2ONyU"
